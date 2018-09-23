@@ -1,4 +1,5 @@
 import React from 'react';
+import CommentList from './CommentList';
 
 export default class Article extends React.Component {
 	constructor(props) {
@@ -11,11 +12,16 @@ export default class Article extends React.Component {
 	render() {
 		const { article } = this.props;
 		const { isOpen } = this.state;
-		const section = isOpen ? <section>{article.text}</section> : null;
+		const { comments } = article;
+		const section = isOpen ?
+			<section>
+				{article.text}
+				<CommentList comments={comments} />
+			</section> : null;
 		return (
 			<div>
 				<h3>{article.title}</h3>
-				<button onClick={this.toogleOpen}>
+				<button onClick={this.toggleOpen}>
 					{ isOpen ? 'close' : 'open' }
 				</button>
 				{ section }
@@ -23,7 +29,7 @@ export default class Article extends React.Component {
 		);
 	}
 	
-	toogleOpen = () => {
+	toggleOpen = () => {
 		this.setState({
 			isOpen: !this.state.isOpen
 		});
